@@ -4,3 +4,4 @@ gunicorn==23.0.0
 flask-cors==5.0.0
 waitress==2.1.2
 pyodbc==5.2.0
+pymssql==2.3.1
