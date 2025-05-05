@@ -32,10 +32,10 @@ class SQLServerService:
                     FROM agent_hourly_metrics ahm
                     LEFT JOIN onboarding o ON ahm.agent = o.agent
                 """,
-                "calls": """
+                "custom_filters": """
                     SELECT c.call_id, c.agent, c.duration, c.phone, c.connected_status,
                            c.call_back_status, c.date_time, o.full_name
-                    FROM calls c
+                    FROM custom_filters c
                     LEFT JOIN onboarding o ON c.agent = o.agent
                 """,
                 "key_assignment": """
@@ -87,7 +87,7 @@ class SQLServerService:
             "agents": ["agent", "total_call_attempt", "unique_dialed", "connected", "total_call_duration", "not_connected", "call_back_later", "time_clock_hrs", "status", "full_name"],
             "onboarding": ["id", "timestamp", "email_address", "full_name", "phone_number", "email_id", "job_position", "google_drive_link_interview", "wa_reminder", "results", "salary", "doj", "exit_date", "days_left", "agent"],
             "agent_hourly_metrics": ["id", "agent", "total_call_attempt", "unique_dialed", "connected", "total_call_duration", "not_connected", "call_back_later", "hour_timestamp", "full_name"],
-            "calls": ["call_id", "agent", "duration", "phone", "connected_status", "call_back_status", "date_time", "full_name"],
+            "custom_filters": ["call_id", "agent", "duration", "phone", "connected_status", "call_back_status", "date_time", "full_name"],
             "key_assignment": ["agent", "business_developer_associate", "date_of_exit", "date_of_joining", "assignable", "full_name", "onboarding_full_name"],
             "archives": ["agent", "full_name", "date_of_exit", "attendance_count", "total_talktime", "no_of_calls", "onboarding_full_name"]
         }
