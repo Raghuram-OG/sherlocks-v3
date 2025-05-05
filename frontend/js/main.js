@@ -1,12 +1,12 @@
 // const API_URL = "http://localhost:5000/api"; // Update with deployed URL (e.g., Vercel)
 const API_URL = "https://sherlocks-v3.onrender.com/api"
 let currentTable = "agents";
-let daysFilter = 0; // Default to show all custom_filters
+let daysFilter = 0; // Default to show all calls
 
 document.getElementById("table-select").addEventListener("change", (e) => {
     currentTable = e.target.value;
-    // Show filter container only for custom_filters table 
-    document.getElementById("filter-container").style.display = currentTable === "custom_filters" ? "block" : "none";
+    // Show filter container only for calls table 
+    document.getElementById("filter-container").style.display = currentTable === "calls" ? "block" : "none";
     // Reset filter and error on table change
     document.getElementById("days-filter").value = "";
     document.getElementById("filter-error").style.display = "none";
@@ -34,9 +34,9 @@ document.getElementById("apply-filter")?.addEventListener("click", () => {
 
 async function loadTableData() {
     try {
-        // Construct URL with days filter for custom_filters table
+        // Construct URL with days filter for calls table
         let url = `${API_URL}/${currentTable}`;
-        if (currentTable === "custom_filters" && daysFilter !== 0) {
+        if (currentTable === "calls" && daysFilter !== 0) {
             url += `?days=${daysFilter}`;
         }
         console.log(`Fetching data from: ${url}`);
@@ -51,7 +51,7 @@ async function loadTableData() {
             console.warn(`No data returned for ${currentTable}`);
             renderTable([]); // Ensure "No data available" is shown
             document.getElementById("filter-error").textContent = "No calls found for the selected filter";
-            document.getElementById("filter-error").style.display = currentTable === "custom_filters" ? "inline" : "none";
+            document.getElementById("filter-error").style.display = currentTable === "calls" ? "inline" : "none";
         } else {
             document.getElementById("filter-error").style.display = "none";
             renderTable(data);
@@ -62,10 +62,10 @@ async function loadTableData() {
         console.error(`Error loading ${currentTable} data:`, error);
         renderTable([]);
         document.getElementById("filter-error").textContent = `Error: ${error.message}`;
-        document.getElementById("filter-error").style.display = currentTable === "custom_filters" ? "inline" : "none";
+        document.getElementById("filter-error").style.display = currentTable === "calls" ? "inline" : "none";
     }
 }
 
 // Initial load
-document.getElementById("filter-container").style.display = currentTable === "custom_filters" ? "block" : "none";
+document.getElementById("filter-container").style.display = currentTable === "calls" ? "block" : "none";
 loadTableData();
