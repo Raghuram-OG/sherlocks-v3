@@ -83,7 +83,7 @@ class SQLServerService:
 
     @staticmethod
     def get_table_columns(table):
-       columns = {
+        columns = {
             "agents": ["agent", "total_call_attempt", "unique_dialed", "connected", "total_call_duration", "not_connected", "call_back_later", "time_clock_hrs", "status", "full_name"],
             "onboarding": ["id", "timestamp", "email_address", "full_name", "phone_number", "email_id", "job_position", "google_drive_link_interview", "wa_reminder", "results", "salary", "doj", "exit_date", "days_left", "agent"],
             "agent_hourly_metrics": ["id", "agent", "total_call_attempt", "unique_dialed", "connected", "total_call_duration", "not_connected", "call_back_later", "hour_timestamp", "full_name"],
