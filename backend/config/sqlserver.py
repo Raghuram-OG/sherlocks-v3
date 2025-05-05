@@ -9,8 +9,9 @@ def get_connection():
         server=os.getenv('DB_SERVER'),
         user=os.getenv('DB_USERNAME'),
         password=os.getenv('DB_PASSWORD'),
-        database=os.getenv('DB_NAME')
+        database=os.getenv('DB_NAME'),
+        as_dict=True  # This will return results as dictionaries
     )
 
-# For backward compatibility with your existing code
-SQLSERVER_CONNECTION_STRING = ""  # Keep this to avoid errors, but it won't be used
+# Keep this for backward compatibility but it won't be used
+SQLSERVER_CONNECTION_STRING = ""
