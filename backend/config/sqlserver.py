@@ -1,15 +1,16 @@
 import os
 from dotenv import load_dotenv
-import pyodbc
+import pymssql
 
 load_dotenv()
 
-# SQL Server connection string
+def get_connection():
+    return pymssql.connect(
+        server=os.getenv('DB_SERVER'),
+        user=os.getenv('DB_USERNAME'),
+        password=os.getenv('DB_PASSWORD'),
+        database=os.getenv('DB_NAME')
+    )
 
-SQLSERVER_CONNECTION_STRING = (
-    f"DRIVER={{ODBC Driver 17 for SQL Server}};"  
-    f"SERVER={os.getenv('DB_SERVER')};"
-    f"DATABASE={os.getenv('DB_NAME')};"
-    f"UID={os.getenv('DB_USERNAME')};"
-    f"PWD={os.getenv('DB_PASSWORD')}"
-)
+# For backward compatibility with your existing code
+SQLSERVER_CONNECTION_STRING = ""  # Keep this to avoid errors, but it won't be used
