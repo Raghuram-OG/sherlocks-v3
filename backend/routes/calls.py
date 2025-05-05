@@ -21,7 +21,7 @@ def get_calls():
             query = """
                 SELECT c.call_id, c.agent, c.duration, c.phone, c.connected_status,
                        c.call_back_status, c.date_time, o.full_name
-                FROM calls c
+                FROM custom_filters c
                 LEFT JOIN onboarding o ON c.agent = o.agent
                 WHERE c.date_time >= %s
             """
@@ -31,7 +31,7 @@ def get_calls():
             query = """
                 SELECT c.call_id, c.agent, c.duration, c.phone, c.connected_status,
                        c.call_back_status, c.date_time, o.full_name
-                FROM calls c
+                FROM custom_filters c
                 LEFT JOIN onboarding o ON c.agent = o.agent
             """
             cursor.execute(query)
