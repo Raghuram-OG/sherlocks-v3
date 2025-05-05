@@ -1,9 +1,7 @@
 from flask import Blueprint, jsonify, request
-from services.sqlserver_service import SQLServerService
+from config.sqlserver import get_connection
 from datetime import datetime, timedelta
 import logging
-import pyodbc
-from config.sqlserver import SQLSERVER_CONNECTION_STRING
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -15,7 +13,7 @@ def get_calls():
     try:
         days = request.args.get("days", type=int)
         
-        conn = pyodbc.connect(SQLSERVER_CONNECTION_STRING)
+        conn = get_connection()
         cursor = conn.cursor()
         
         if days is not None and days >= 0:
@@ -25,9 +23,9 @@ def get_calls():
                        c.call_back_status, c.date_time, o.full_name
                 FROM calls c
                 LEFT JOIN onboarding o ON c.agent = o.agent
-                WHERE c.date_time >= ?
+                WHERE c.date_time >= %s
             """
-            cursor.execute(query, date_threshold)
+            cursor.execute(query, (date_threshold,))
             logger.debug(f"Days filter: {days}, Date threshold: {date_threshold}")
         else:
             query = """
@@ -38,8 +36,7 @@ def get_calls():
             """
             cursor.execute(query)
         
-        columns = [column[0] for column in cursor.description]
-        data = [dict(zip(columns, row)) for row in cursor.fetchall()]
+        data = cursor.fetchall()  # Results are already dictionaries
         data = [{**row, "full_name": row.get("full_name", "")} for row in data]
         
         logger.debug(f"Query returned {len(data)} calls")
