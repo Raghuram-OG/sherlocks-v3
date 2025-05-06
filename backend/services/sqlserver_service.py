@@ -15,7 +15,7 @@ class SQLServerService:
                 "onboarding": """
                     SELECT id, timestamp, email_address, full_name, phone_number, email_id,
                            job_position, google_drive_link_interview, wa_reminder, results,
-                           salary, doj, exit_date, days_left, agent
+                           salary, doj, exit_date, days_left, agent, Interview
                     FROM onboarding
                 """,
                 "agents": """
